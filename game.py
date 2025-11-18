@@ -5,6 +5,12 @@ from gameparts.exceptions import FieldIndexError
 from gameparts.exceptions import CellOccupiedError
 
 
+def save_result(result):
+    file = open('results.txt', 'a', encoding='utf-8')
+    file.write(result + '\n')
+    file.close()
+
+
 def main():
     game = Board()
     # Первыми ходят крестики.
@@ -58,10 +64,14 @@ def main():
         # Если current_player равен X, то новым значением будет O,
         # иначе — новым значением будет X.
         if game.check_win(current_player):
-            print(f'Победили {current_player}!')
+            result = f'Победили {current_player}!'
+            save_result(result)
+            print(result)
             running = False
         elif game.is_board_full():
-            print('Ничья!')
+            result = 'Ничья!'
+            save_result(result)
+            print(result)
             running = False
         if current_player == 'X':
             current_player = 'O'
